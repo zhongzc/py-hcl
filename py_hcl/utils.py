@@ -13,6 +13,22 @@ def unsigned_num_bin_len(num):
     return len("{:b}".format(num))
 
 
+def get_hcl_expr_by_name(packed_module, name):
+    table = packed_module.named_expr_chain.named_expr_chain_head \
+        .named_expr_holder.named_expression_table
+    expr_id = get_key_by_value(table, name)
+    return get_hcl_expr_by_id(expr_id)
+
+
+def get_hcl_expr_by_id(expr_id):
+    from py_hcl.core.expr import ExprTable
+    return ExprTable.table[expr_id]
+
+
+def get_key_by_value(dct, value):
+    return list(dct.keys())[list(dct.values()).index(value)]
+
+
 def json_serialize(cls=None, json_fields=()):
     def rec(v):
         if hasattr(v, "json_obj"):

@@ -3,6 +3,7 @@ from py_hcl.core.module_factory.inherit_list.named_expr import NamedExprHolder
 from py_hcl.core.module_factory.inherit_list.stmt_holder import StmtHolder
 from py_hcl.core.stmt_factory.trapper import StatementTrapper
 from py_hcl.core.utils import module_inherit_mro
+from py_hcl.utils import get_hcl_expr_by_id, get_key_by_value
 from . import extractor
 from . import merger
 from ..stmt import ClusterStatement, ConditionStatement
@@ -20,8 +21,15 @@ def pack(bases, dct, name) -> PackedModule:
     return res
 
 
+def check_io_inherit(modules, param):
+    pass
+
+
 def handle_inherit(bases, named_expression, top_statement, name):
     modules = module_inherit_mro(bases)
+
+    io = get_hcl_expr_by_id(get_key_by_value(named_expression, 'io'))
+    check_io_inherit(modules, io)
 
     named_expr_chain = \
         merger.merge_expr(modules, NamedExprHolder(name, named_expression))

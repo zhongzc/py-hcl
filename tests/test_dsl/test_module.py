@@ -17,6 +17,7 @@ def test_module():
 
 
 def test_module_not_contains_io():
-    with pytest.raises(ModuleError, match='^.*lack of io.*$'):
+    with pytest.raises(ModuleError,
+                       match="io attribute is required in Module"):
         class A(Module):
             b = HclExpr()

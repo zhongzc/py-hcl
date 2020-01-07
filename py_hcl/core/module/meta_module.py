@@ -32,4 +32,5 @@ def fetch_module_name(name: str) -> str:
 def check_io_exist(dct, name):
     if 'io' not in dct:
         raise ModuleError.not_contains_io(
-            'module {} lack of io attribute'.format(name))
+            "io attribute is required in Module, "
+            "but it's not found in {}".format(name))
